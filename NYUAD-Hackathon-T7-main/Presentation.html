@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quantum-Enhanced Water Contamination Tripwire — NYUAD Hackathon</title>
+<style>
+  :root{
+    --bg:#0b1520;
+    --surface:#13202e;
+    --ink:#e8edf2;
+    --muted:#8a9baa;
+    --line:#1e3040;
+    --accent:#38bdf8;
+    --accent2:#2dd4bf;
+    --danger:#f87171;
+    --gold:#fbbf24;
+    --card:#162436;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);font-family:"Segoe UI",Roboto,system-ui,sans-serif;color:var(--ink);overflow:hidden}
+  .stage{position:fixed;inset:0;display:flex;align-items:center;justify-content:center}
+  .deck{width:1920px;height:1080px;transform-origin:center center}
+  .slide{position:absolute;inset:0;background:var(--bg);padding:80px 100px;display:none;flex-direction:column}
+  .slide.active{display:flex}
+
+  /* type */
+  .kicker{font-size:18px;letter-spacing:.25em;text-transform:uppercase;color:var(--accent);font-weight:600;margin-bottom:20px}
+  h1{font-size:76px;line-height:1.05;font-weight:800;letter-spacing:-.02em}
+  h2{font-size:48px;line-height:1.1;font-weight:800;letter-spacing:-.01em;margin-bottom:12px}
+  .lead{font-size:28px;color:var(--muted);line-height:1.4;font-weight:400}
+  .body{font-size:24px;line-height:1.5;color:var(--ink)}
+  .em{font-weight:700;color:var(--ink)}
+  .accent{color:var(--accent);font-weight:700}
+  .danger{color:var(--danger);font-weight:700}
+
+  /* title slide */
+  .title-wrap{display:flex;flex-direction:column;justify-content:center;gap:36px}
+  .title-rule{width:100px;height:5px;background:var(--accent);border-radius:3px}
+  .title-meta{font-size:20px;color:var(--muted);letter-spacing:.05em}
+
+  /* hero number */
+  .hero-num{font-size:110px;font-weight:900;color:var(--accent);line-height:1;letter-spacing:-.03em;margin:8px 0}
+  .hero-sub{font-size:28px;color:var(--muted);margin-top:8px;line-height:1.3}
+
+  /* stat blocks */
+  .statgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:12px}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:32px 28px 24px;text-align:center}
+  .stat .big{font-size:72px;font-weight:900;color:var(--accent);line-height:1;letter-spacing:-.02em}
+  .stat .lab{font-size:20px;color:var(--ink);margin-top:14px;line-height:1.3}
+  .stat .src{font-size:15px;color:var(--muted);margin-top:16px}
+  a.cite{color:var(--accent);text-decoration:underline;text-underline-offset:3px;font-weight:600;font-size:.82em}
+
+  /* two-col */
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;flex:1}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:30px}
+  .card h3{font-size:26px;font-weight:700;margin-bottom:14px;color:var(--ink)}
+
+  /* figure panel */
+  .figwrap{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:24px}
+  .figcap{font-size:17px;color:var(--muted);margin-top:12px;line-height:1.4}
+  svg{display:block;width:100%;height:auto}
+
+  /* comparison table */
+  table.cmp{width:100%;border-collapse:collapse;margin-top:8px}
+  table.cmp th,table.cmp td{text-align:left;padding:14px 18px;font-size:22px;border-bottom:1px solid var(--line);vertical-align:top}
+  table.cmp th{font-weight:700;color:var(--muted);font-size:16px;letter-spacing:.06em;text-transform:uppercase}
+  table.cmp td.win{color:var(--accent2);font-weight:700}
+  table.cmp tr:last-child td{border-bottom:none}
+
+  .footbar{position:absolute;left:100px;right:100px;bottom:36px;display:flex;justify-content:space-between;align-items:center;font-size:16px;color:var(--muted)}
+  .pager{font-variant-numeric:tabular-nums}
+  .navhint{letter-spacing:.05em}
+
+  .callout{border-left:4px solid var(--accent);background:#0f2a3d;padding:20px 24px;border-radius:0 10px 10px 0;margin-top:16px;font-size:23px;line-height:1.4}
+  .callout b{color:var(--accent)}
+
+  .legend{display:flex;gap:24px;margin-top:12px;font-size:17px;color:var(--muted);align-items:center}
+  .swatch{width:28px;height:4px;border-radius:2px;display:inline-block;vertical-align:middle;margin-right:8px}
+
+  /* list */
+  ul.clean{list-style:none}
+  ul.clean li{position:relative;padding-left:24px;margin:10px 0;font-size:22px;line-height:1.45}
+  ul.clean li::before{content:"";position:absolute;left:0;top:12px;width:8px;height:8px;border-radius:50%;background:var(--accent)}
+
+  /* full-bleed figure slide */
+  .fig-hero{flex:1;display:flex;flex-direction:column;justify-content:center}
+  .fig-hero img{width:100%;max-height:620px;object-fit:contain;border-radius:10px}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="deck" id="deck">
+
+    <!-- 1 TITLE -->
+    <section class="slide active">
+      <div class="title-wrap">
+        <div class="kicker">NYUAD Hackathon · UN Water Conference 2026</div>
+        <h1>Quantum-Enhanced<br>Water Contamination<br>Tripwire</h1>
+        <div class="title-rule"></div>
+        <div class="lead" style="max-width:1200px">Breaking the sensitivity wall that keeps rural water monitoring out of reach — by changing a law of physics, not buying more sensors.</div>
+        <div class="title-meta">CS · AI · Quantum Computing · Quantum Hardware</div>
+      </div>
+    </section>
+
+    <!-- 2 THE PROBLEM -->
+    <section class="slide">
+      <div class="kicker">The Problem</div>
+      <h2>Billions drink water that is present — but unsafe, and unknown</h2>
+      <div style="height:24px"></div>
+      <div class="statgrid">
+        <div class="stat"><div class="big">2.1B</div><div class="lab">people lack safely managed<br>drinking water (1 in 4)</div><div class="src"><a class="cite" href="https://www.unicef.org/press-releases/un-childrens-fund-and-who-release-joint-report-progress-drinking-water-sanitation" target="_blank">WHO/UNICEF JMP 2025</a></div></div>
+        <div class="stat"><div class="big">3.4B</div><div class="lab">people lack safely managed<br>sanitation (2 in 5)</div><div class="src"><a class="cite" href="https://www.unicef.org/press-releases/un-childrens-fund-and-who-release-joint-report-progress-drinking-water-sanitation" target="_blank">WHO/UNICEF JMP 2025</a></div></div>
+        <div class="stat"><div class="big">2049</div><div class="lab">earliest year SDG 6 is met<br>(19 yrs past the 2030 target)</div><div class="src"><a class="cite" href="https://www.un.org/sustainabledevelopment/blog/2025/un-report-sdg-progress-water-sanitation/" target="_blank">UN SDG 6 Report 2025</a></div></div>
+      </div>
+      <div style="height:28px"></div>
+      <div class="callout"><b>The failure mode is not absence of water — it is undetected contamination.</b> Water is there; no one knows it is unsafe until someone gets sick.</div>
+    </section>
+
+    <!-- 3 DOCUMENTED CRISIS -->
+    <section class="slide">
+      <div class="kicker">The Problem</div>
+      <h2>Documented at a population level — not hypothetical</h2>
+      <div style="height:20px"></div>
+      <div class="cols">
+        <div class="card">
+          <h3>Arsenic in Bangladesh</h3>
+          <div class="body" style="font-size:22px">The largest mass poisoning in history. Estimated <span class="accent">35–77 million</span> people at risk; up to 70M per IAEA, across 59 of 64 districts. The tube wells installed in the 70s–80s were <span class="em">never tested.</span></div>
+          <div class="callout" style="margin-top:18px"><b>1 in 10</b> people drinking 500 µg/L arsenic may die from cancer.</div>
+        </div>
+        <div class="card">
+          <h3>Widespread, chronic, undetected</h3>
+          <ul class="clean" style="font-size:21px">
+            <li><span class="em">India:</span> 3.6% of groundwater samples over the arsenic limit</li>
+            <li><span class="em">US:</span> 22% of groundwater samples over at least one health benchmark</li>
+            <li><span class="em">Nigeria:</span> 68–70% of water sources contaminated</li>
+            <li><span class="em">Global South:</span> nitrate 53–83 mg/L vs the 50 mg/L WHO limit</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4 THE SENSITIVITY WALL -->
+    <section class="slide">
+      <div class="kicker">Why Detection Fails</div>
+      <h2>The sensitivity wall: error ∝ 1/√N — a law of physics</h2>
+      <div style="height:16px"></div>
+      <div class="cols">
+        <div>
+          <svg viewBox="0 0 800 520" role="img" aria-label="Estimation error vs N, SQL vs Heisenberg">
+            <rect width="800" height="520" fill="var(--card)" rx="12"/>
+            <g stroke="var(--line)" stroke-width="1">
+              <line x1="90" y1="60" x2="740" y2="60"/>
+              <line x1="90" y1="150" x2="740" y2="150"/>
+              <line x1="90" y1="240" x2="740" y2="240"/>
+              <line x1="90" y1="330" x2="740" y2="330"/>
+              <line x1="90" y1="420" x2="740" y2="420"/>
+            </g>
+            <line x1="90" y1="460" x2="740" y2="460" stroke="#e8edf2" stroke-width="2"/>
+            <line x1="90" y1="60" x2="90" y2="460" stroke="#e8edf2" stroke-width="2"/>
+            <g fill="#8a9baa" font-size="16" text-anchor="end">
+              <text x="82" y="67">1.0</text>
+              <text x="82" y="157">0.8</text>
+              <text x="82" y="247">0.6</text>
+              <text x="82" y="337">0.4</text>
+              <text x="82" y="427">0.2</text>
+              <text x="82" y="465">0</text>
+            </g>
+            <g fill="#8a9baa" font-size="16" text-anchor="middle">
+              <text x="90" y="485">1</text>
+              <text x="230" y="485">4</text>
+              <text x="370" y="485">16</text>
+              <text x="510" y="485">32</text>
+              <text x="650" y="485">64</text>
+            </g>
+            <path d="M 90,60 C 130,120 170,180 230,240 C 290,285 370,330 450,360 C 530,385 610,405 740,430" fill="none" stroke="#f87171" stroke-width="4" stroke-linecap="round"/>
+            <path d="M 90,60 C 130,200 170,300 230,370 C 290,410 370,435 450,448 C 530,455 610,458 740,459" fill="none" stroke="#38bdf8" stroke-width="4" stroke-linecap="round"/>
+            <line x1="370" y1="330" x2="370" y2="435" stroke="#e8edf2" stroke-width="1.5" stroke-dasharray="5 4"/>
+            <circle cx="370" cy="330" r="6" fill="#f87171"/>
+            <circle cx="370" cy="435" r="6" fill="#38bdf8"/>
+            <text x="380" y="385" fill="#e8edf2" font-size="15" font-weight="700">4× gap</text>
+          </svg>
+          <div class="legend">
+            <span><span class="swatch" style="background:#f87171"></span>Separable · 1/√N (SQL)</span>
+            <span><span class="swatch" style="background:#38bdf8"></span>Entangled · 1/N (Heisenberg)</span>
+          </div>
+        </div>
+        <div>
+          <div class="hero-num" style="font-size:80px;color:var(--danger)">1/√N</div>
+          <div class="body">This is the <span class="em">Standard Quantum Limit</span> — an information-theoretic bound. No better sensor, no smarter algorithm breaks it.</div>
+          <div style="height:18px"></div>
+          <table class="cmp" style="font-size:21px">
+            <tr><th>Sensitivity goal</th><th>Sensors needed (SQL)</th></tr>
+            <tr><td>Detect at 50 ppm</td><td>N</td></tr>
+            <tr><td>25 ppm (2× better)</td><td class="win">4N</td></tr>
+            <tr><td>12.5 ppm (4× better)</td><td class="win">16N</td></tr>
+            <tr><td>6.25 ppm (8× better)</td><td class="win">64N</td></tr>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5 THE SOLUTION -->
+    <section class="slide">
+      <div class="kicker">The Solution</div>
+      <h2>One entangled probe → QFI scales as N², not N</h2>
+      <div style="height:16px"></div>
+      <div class="cols">
+        <div>
+          <svg viewBox="0 0 800 520" role="img" aria-label="Beam splitter network distributing entangled probe">
+            <rect width="800" height="520" fill="var(--card)" rx="12"/>
+            <circle cx="100" cy="260" r="30" fill="none" stroke="#38bdf8" stroke-width="3"/>
+            <text x="100" y="255" text-anchor="middle" fill="#38bdf8" font-size="13" font-weight="700">squeezed</text>
+            <text x="100" y="273" text-anchor="middle" fill="#38bdf8" font-size="13" font-weight="700">vacuum</text>
+            <line x1="130" y1="260" x2="220" y2="260" stroke="#38bdf8" stroke-width="2.5"/>
+            <rect x="220" y="180" width="260" height="160" rx="10" fill="none" stroke="#2dd4bf" stroke-width="2.5"/>
+            <text x="350" y="260" text-anchor="middle" fill="#2dd4bf" font-size="16" font-weight="700">beam-splitter</text>
+            <text x="350" y="282" text-anchor="middle" fill="#2dd4bf" font-size="14">network (N−1 BS)</text>
+            <g stroke="#38bdf8" stroke-width="2">
+              <line x1="480" y1="200" x2="620" y2="100"/>
+              <line x1="480" y1="220" x2="620" y2="170"/>
+              <line x1="480" y1="240" x2="620" y2="240"/>
+              <line x1="480" y1="260" x2="620" y2="310"/>
+              <line x1="480" y1="280" x2="620" y2="380"/>
+              <line x1="480" y1="300" x2="620" y2="450"/>
+            </g>
+            <g>
+              <circle cx="660" cy="100" r="18" fill="var(--card)" stroke="#38bdf8" stroke-width="2"/>
+              <circle cx="660" cy="170" r="18" fill="var(--card)" stroke="#38bdf8" stroke-width="2"/>
+              <circle cx="660" cy="240" r="18" fill="var(--card)" stroke="#38bdf8" stroke-width="2"/>
+              <circle cx="660" cy="310" r="18" fill="var(--card)" stroke="#38bdf8" stroke-width="2"/>
+              <circle cx="660" cy="380" r="18" fill="var(--card)" stroke="#38bdf8" stroke-width="2"/>
+              <circle cx="660" cy="450" r="18" fill="var(--card)" stroke="#38bdf8" stroke-width="2"/>
+            </g>
+            <g fill="#8a9baa" font-size="14">
+              <text x="700" y="105">node 1</text>
+              <text x="700" y="175">node 2</text>
+              <text x="700" y="245">node 3</text>
+              <text x="700" y="315">…</text>
+              <text x="700" y="385">node N−1</text>
+              <text x="700" y="455">node N</text>
+            </g>
+            <g fill="#fbbf24" font-size="13">
+              <text x="660" y="82" text-anchor="middle">φ₁</text>
+              <text x="660" y="152" text-anchor="middle">φ₂</text>
+              <text x="660" y="222" text-anchor="middle">φ₃</text>
+            </g>
+          </svg>
+        </div>
+        <div>
+          <ul class="clean" style="font-size:22px">
+            <li>Generate a <span class="em">squeezed vacuum</span> (LIGO runs 15 dB; commercial units exist)</li>
+            <li>Distribute through a <span class="em">beam-splitter network</span> → N entangled modes</li>
+            <li>Each node imprints a contaminant phase φᵢ</li>
+            <li>Local <span class="em">homodyne readout</span> (cheap, off-the-shelf)</li>
+            <li>Estimate regional sum q = Σ wᵢφᵢ → QFI ∝ N²</li>
+          </ul>
+          <div style="height:18px"></div>
+          <div class="callout"><b>Scope:</b> detect <i>if</i> the region is contaminated. Localization (which node) is a separate classical step — entanglement is not needed there.</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6 THE PAYOFF -->
+    <section class="slide">
+      <div class="kicker">The Payoff</div>
+      <h2>Same sensors, 4× sensitivity — or 4× fewer sensors</h2>
+      <div style="height:20px"></div>
+      <div class="cols">
+        <div>
+          <svg viewBox="0 0 800 520" role="img" aria-label="Sensors needed for same threshold, SQL vs Heisenberg">
+            <rect width="800" height="520" fill="var(--card)" rx="12"/>
+            <line x1="80" y1="80" x2="740" y2="80" stroke="#e8edf2" stroke-width="1.5" stroke-dasharray="6 5"/>
+            <text x="88" y="72" fill="#8a9baa" font-size="15">same detection threshold</text>
+            <g>
+              <rect x="140" y="280" width="50" height="200" fill="#f87171" rx="4"/>
+              <rect x="200" y="380" width="50" height="100" fill="#38bdf8" rx="4"/>
+              <text x="195" y="505" text-anchor="middle" fill="#e8edf2" font-size="16">N = 8</text>
+              <rect x="320" y="230" width="50" height="250" fill="#f87171" rx="4"/>
+              <rect x="380" y="330" width="50" height="150" fill="#38bdf8" rx="4"/>
+              <text x="375" y="505" text-anchor="middle" fill="#e8edf2" font-size="16">N = 16</text>
+              <rect x="500" y="180" width="50" height="300" fill="#f87171" rx="4"/>
+              <rect x="560" y="280" width="50" height="200" fill="#38bdf8" rx="4"/>
+              <text x="555" y="505" text-anchor="middle" fill="#e8edf2" font-size="16">N = 32</text>
+              <rect x="680" y="130" width="50" height="350" fill="#f87171" rx="4"/>
+              <rect x="740" y="230" width="50" height="250" fill="#38bdf8" rx="4"/>
+              <text x="735" y="505" text-anchor="middle" fill="#e8edf2" font-size="16">N = 64</text>
+            </g>
+            <g fill="#fff" font-size="15" font-weight="700" text-anchor="middle">
+              <text x="165" y="385">8</text><text x="225" y="435">4</text>
+              <text x="345" y="355">16</text><text x="405" y="410">8</text>
+              <text x="525" y="335">32</text><text x="585" y="390">16</text>
+              <text x="705" y="310">64</text><text x="765" y="365">32</text>
+            </g>
+          </svg>
+          <div class="legend">
+            <span><span class="swatch" style="background:#f87171"></span>SQL: N sensors</span>
+            <span><span class="swatch" style="background:#38bdf8"></span>Heisenberg: √N sensors (4× fewer)</span>
+          </div>
+        </div>
+        <div>
+          <div class="body">For a fixed budget you cannot deploy enough <span class="em">independent</span> sensors to hit the sensitivity needed. The gap is not sensor quality — it is the scaling law.</div>
+          <div style="height:20px"></div>
+          <table class="cmp" style="font-size:22px">
+            <tr><th>Community can afford…</th><th>SQL gives</th><th>Ours gives</th></tr>
+            <tr><td>8 sensors</td><td>baseline</td><td class="win">32-sensor sensitivity</td></tr>
+            <tr><td>16 sensors</td><td>baseline</td><td class="win">64-sensor sensitivity</td></tr>
+          </table>
+          <div style="height:20px"></div>
+          <div class="callout"><b>4× fewer sensors</b> = 4× less installation, maintenance, and failure points. The difference between "feasible" and "not feasible."</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 7 WHY IT WINS -->
+    <section class="slide">
+      <div class="kicker">Why This Wins</div>
+      <h2>A proven physics advantage in a category no one else claims</h2>
+      <div style="height:20px"></div>
+      <table class="cmp" style="font-size:23px">
+        <tr><th>Approach</th><th>Limitation</th><th>Ours</th></tr>
+        <tr><td>More / better classical sensors</td><td>SQL: 1/√N — 4× sensors for 2× sensitivity. Lower constant, not scaling.</td><td class="win">1/N — changes the scaling exponent itself</td></tr>
+        <tr><td>Classical signal fusion</td><td>Optimal fusion of N independent readings is still 1/√N (Cramér–Rao)</td><td class="win">QCRB with entangled probe is fundamentally tighter</td></tr>
+        <tr><td>Quantum optimization (QAOA/VQE)</td><td>No demonstrated advantage at practical problem sizes</td><td class="win">We use classical optimization — the quantum part is sensing, not computation</td></tr>
+        <tr><td>Past NYUAD winners</td><td>All quantum <i>computation</i> / QML</td><td class="win">First to bring quantum <i>metrology</i> to social impact</td></tr>
+      </table>
+      <div style="height:20px"></div>
+      <div class="callout"><b>Defense:</b> the 1/√N → 1/N jump is a change in the information-theoretic ceiling. No classical strategy — any sensor, any algorithm — reaches it.</div>
+    </section>
+
+    <!-- 8 PROOF OF CONCEPT (FIGURE) -->
+    <section class="slide">
+      <div class="kicker">Proof of Concept</div>
+      <h2>Built and run on real USGS well data</h2>
+      <div style="height:16px"></div>
+      <div class="fig-hero">
+        <img src="poc/results/sensing_experiment.png" alt="Sensing experiment results" style="width:100%;max-height:580px;object-fit:contain;border-radius:10px"/>
+        <div class="figcap" style="font-size:18px">Left: estimation error in µg/L vs N — separable (SQL) vs entangled (Heisenberg), with photon loss η = 1.0 / 0.8 / 0.6 bending toward SQL. Red dashed = EPA MCL (10 µg/L). Right: aggregate QFI grows ~N² while single-node QFI stays flat. Phases from <span class="em">real USGS WQP arsenic data</span> (8,889 wells; LA / San Gabriel basin cluster).</div>
+      </div>
+    </section>
+
+    <!-- 9 VERIFIED RESULTS -->
+    <section class="slide">
+      <div class="kicker">Proof of Concept</div>
+      <h2>What the code measured — verified numbers</h2>
+      <div style="height:20px"></div>
+      <div class="cols">
+        <div>
+          <table class="cmp" style="font-size:21px">
+            <tr><th>Metric</th><th>Result</th></tr>
+            <tr><td>Separable scaling exponent</td><td class="win">−0.5 → 1/√N ✓</td></tr>
+            <tr><td>Entangled scaling exponent</td><td class="win">−0.85 → ~1/N ✓</td></tr>
+            <tr><td>Error @ N=64: sep vs ent</td><td class="win">4.24 vs 0.70 µg/L (6× gap)</td></tr>
+            <tr><td>MCL resolvability (10 µg/L)</td><td class="win">Entangled from N=4; separable from N=16</td></tr>
+            <tr><td>Aggregate vs single-node QFI @ N=64</td><td class="win">20,449 vs 22 (925×)</td></tr>
+          </table>
+        </div>
+        <div>
+          <div class="card">
+            <h3>What the code computes</h3>
+            <ul class="clean" style="font-size:20px">
+              <li>Loads <span class="em">8,889 real USGS wells</span>; maps arsenic (µg/L) to phase φᵢ = s·cᵢ</li>
+              <li>Builds the full <span class="em">Gaussian covariance matrix</span> for N modes</li>
+              <li>Computes QFI: F = 4(dd)ᵀV⁻¹(dd) + 2Tr[(V⁻¹dV/dθ)²]</li>
+              <li>Error = 1/√F in <span class="em">µg/L</span> (homodyne saturates QCRB)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 10 HONEST LIMITS -->
+    <section class="slide">
+      <div class="kicker">The Honest Limits</div>
+      <h2>What this experiment does and does not claim</h2>
+      <div style="height:20px"></div>
+      <div class="cols">
+        <div class="card">
+          <h3>Coding / simulation limits</h3>
+          <ul class="clean" style="font-size:21px">
+            <li>Ideal homodyne — no detector inefficiency modeled</li>
+            <li>Loss mixes with zero-temp vacuum, not thermal bath</li>
+            <li>No finite squeezing fidelity, no phase drift</li>
+            <li>N restricted to powers of two (2…64)</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Data / physics limits</h3>
+          <ul class="clean" style="font-size:21px">
+            <li><span class="em">Phase ∝ contamination is assumed,</span> not calibrated (s = 0.01 rad/µg/L)</li>
+            <li>No sensor chemistry or real readout modeled</li>
+            <li>Advantage is <span class="em">aggregate-only</span>: "is the region contaminated," not which node</li>
+            <li>No quantum speedup claimed for sensor <i>placement</i></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 11 CLOSE -->
+    <section class="slide">
+      <div class="title-wrap" style="justify-content:center;gap:32px">
+        <div class="kicker">The Bottom Line</div>
+        <h1 style="font-size:64px;max-width:1500px">This is quantum <span style="color:var(--accent)">sensing</span>,<br>not quantum computing.</h1>
+        <div class="title-rule"></div>
+        <ul class="clean" style="font-size:26px;max-width:1400px">
+          <li>A sensitivity advantage <span class="em">proven in peer-reviewed papers</span> — and <span class="em">reproduced in our own simulation</span>, not just cited</li>
+          <li>Every component is <span class="em">commercial off-the-shelf</span>: squeezed source, beam splitters, homodyne detectors</li>
+          <li>The advantage <span class="em">grows with the network</span> — and we show exactly where it stops</li>
+        </ul>
+        <div class="lead" style="margin-top:16px;font-size:30px;color:var(--ink)">We are not asking for more money. We are making the same money go four times further.</div>
+      </div>
+    </section>
+
+  </div>
+</div>
+
+<div class="footbar">
+  <span class="navhint">← → to navigate · F for fullscreen</span>
+  <span class="pager"><span id="cur">1</span> / <span id="tot">10</span></span>
+</div>
+
+<script>
+(function(){
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var deck = document.getElementById('deck');
+  var cur = 0;
+  var total = slides.length;
+  document.getElementById('tot').textContent = total;
+
+  function show(i){
+    cur = Math.max(0, Math.min(total-1, i));
+    slides.forEach(function(s,idx){ s.classList.toggle('active', idx===cur); });
+    document.getElementById('cur').textContent = cur+1;
+    try{ localStorage.setItem('qwtripwire_slide', String(cur)); }catch(e){}
+  }
+
+  function fit(){
+    var s = Math.min(window.innerWidth/1920, window.innerHeight/1080);
+    deck.style.transform = 'scale(' + s + ')';
+  }
+
+  window.addEventListener('keydown', function(e){
+    if(e.key==='ArrowRight' || e.key==='PageDown' || e.key===' '){ show(cur+1); e.preventDefault(); }
+    else if(e.key==='ArrowLeft' || e.key==='PageUp'){ show(cur-1); e.preventDefault(); }
+    else if(e.key==='Home'){ show(0); }
+    else if(e.key==='End'){ show(total-1); }
+    else if(e.key==='f' || e.key==='F'){
+      if(!document.fullscreenElement){ document.documentElement.requestFullscreen(); }
+      else{ document.exitFullscreen(); }
+    }
+  });
+  window.addEventListener('resize', fit);
+  document.addEventListener('fullscreenchange', fit);
+
+  try{ var saved = parseInt(localStorage.getItem('qwtripwire_slide'),10); if(!isNaN(saved)) show(saved); }catch(e){}
+  fit();
+})();
+</script>
+</body>
+</html>

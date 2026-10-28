@@ -1,0 +1,41 @@
+{
+  "status": "Derived simulation comparisons, not experimental measurements",
+  "conditions": {
+    "nodes": 16,
+    "seconds": 1,
+    "temperature_rms_K": 5e-05,
+    "quantum_power_W_per_tap": 1e-08,
+    "false_alarm_per_window": 0.01
+  },
+  "noise_variance_mg_kg_squared": {
+    "coherent": {
+      "optical": 0.00633918922780545,
+      "temperature": 0.002087166702279569,
+      "calibration": 5.625e-05,
+      "total": 0.00848260593008502
+    },
+    "entangled": {
+      "optical": 0.0022641266394256296,
+      "temperature": 0.002087166702279569,
+      "calibration": 5.625e-05,
+      "total": 0.004407543341705198
+    }
+  },
+  "coherent_matching_power_W_per_tap": 2.7998386297921923e-08,
+  "mean_step_for_95_percent_detection_mg_kg": {
+    "coherent": 0.36575188230954986,
+    "entangled": 0.2636454130428961
+  },
+  "single_tap_event_mg_kg": 0.15,
+  "single_tap_event_mean_mg_kg": 0.009375,
+  "single_tap_event_detection_probability": {
+    "coherent": 0.013055478574695717,
+    "entangled": 0.014439459206805458
+  },
+  "total_rmse_at_70_uW_per_tap": {
+    "coherent": 0.04630682779829216,
+    "entangled": 0.04630054155760903
+  },
+  "assumed_response_T95_seconds": 29.957322735539908,
+  "expected_null_flags_per_hour_at_1_Hz": 36.0
+}

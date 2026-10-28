@@ -1,0 +1,151 @@
+{
+  "seed": 2601006,
+  "units": "mg/kg differential NaCl-equivalent, not pollutant-specific",
+  "phase_slope_rad_per_mg_kg": 6.56993934506262e-06,
+  "dn_dc_RIU_per_mg_kg": 1.6207394e-07,
+  "photon_flux_per_node_s": 78028806796.912,
+  "ideal_slopes_M33_64": {
+    "coherent": -0.5000000000000008,
+    "separable": -0.49999999999999967,
+    "entangled": -0.9532669044561773
+  },
+  "pilot16": {
+    "coherent": {
+      "nodes": 16,
+      "geometry": "pilot",
+      "strategy": "coherent",
+      "eta_min": 0.7318273300691132,
+      "eta_mean": 0.7318273300691132,
+      "eta_max": 0.7318273300691132,
+      "squeezing_photons_total": 0.0,
+      "squeezing_db": 0.0,
+      "optical_rmse": 0.07961902553916024,
+      "controlled_rmse": 0.09210106367510106,
+      "field_rmse": 9.137453886636616,
+      "mean_route_km": 0.1
+    },
+    "separable": {
+      "nodes": 16,
+      "geometry": "pilot",
+      "strategy": "separable",
+      "eta_min": 0.7318273300691132,
+      "eta_mean": 0.7318273300691132,
+      "eta_max": 0.7318273300691132,
+      "squeezing_photons_total": 1.6,
+      "squeezing_db": 2.702886011068206,
+      "optical_rmse": 0.06473296370204243,
+      "controlled_rmse": 0.0795850067030814,
+      "field_rmse": 9.137336302105359,
+      "mean_route_km": 0.1
+    },
+    "entangled": {
+      "nodes": 16,
+      "geometry": "pilot",
+      "strategy": "entangled",
+      "eta_min": 0.7318273300691132,
+      "eta_mean": 0.7318273300691132,
+      "eta_max": 0.7318273300691132,
+      "squeezing_photons_total": 1.6,
+      "squeezing_db": 9.179891928228415,
+      "optical_rmse": 0.04758283975789623,
+      "controlled_rmse": 0.06638933153530918,
+      "field_rmse": 9.137230897149431,
+      "mean_route_km": 0.1
+    }
+  },
+  "regional64": {
+    "coherent": {
+      "nodes": 64,
+      "geometry": "regional",
+      "strategy": "coherent",
+      "eta_min": 0.2929226828670879,
+      "eta_mean": 0.37066363790080803,
+      "eta_max": 0.5939286650355965,
+      "squeezing_photons_total": 0.0,
+      "squeezing_db": 0.0,
+      "optical_rmse": 0.05688960927349966,
+      "controlled_rmse": 0.07305926940211645,
+      "field_rmse": 9.137281793910379,
+      "mean_route_km": 16.384654712789764
+    },
+    "coherent_optimized": {
+      "nodes": 64,
+      "geometry": "regional",
+      "strategy": "coherent_optimized",
+      "eta_min": 0.2929226828670879,
+      "eta_mean": 0.37066363790080803,
+      "eta_max": 0.5939286650355965,
+      "squeezing_photons_total": 0.0,
+      "squeezing_db": 0.0,
+      "optical_rmse": 0.05666786394059491,
+      "controlled_rmse": 0.07288673408700205,
+      "field_rmse": 9.137280415992844,
+      "mean_route_km": 16.384654712789764
+    },
+    "separable": {
+      "nodes": 64,
+      "geometry": "regional",
+      "strategy": "separable",
+      "eta_min": 0.2929226828670879,
+      "eta_mean": 0.37066363790080803,
+      "eta_max": 0.5939286650355965,
+      "squeezing_photons_total": 2.025000000000001,
+      "squeezing_db": 1.5369959569136173,
+      "optical_rmse": 0.053766383653585784,
+      "controlled_rmse": 0.07065446350701522,
+      "field_rmse": 9.137262882159732,
+      "mean_route_km": 16.384654712789764
+    },
+    "entangled": {
+      "nodes": 64,
+      "geometry": "regional",
+      "strategy": "entangled",
+      "eta_min": 0.2929226828670879,
+      "eta_mean": 0.37066363790080803,
+      "eta_max": 0.5939286650355965,
+      "squeezing_photons_total": 2.025000000000001,
+      "squeezing_db": 10.000000000000002,
+      "optical_rmse": 0.046837575026749234,
+      "controlled_rmse": 0.06553615518678169,
+      "field_rmse": 9.137224737967058,
+      "mean_route_km": 16.384654712789764
+    }
+  },
+  "detection": [
+    {
+      "strategy": "coherent",
+      "rmse": 0.09210106367510106,
+      "threshold": 0.21425911367747144,
+      "p_false_alarm": 0.01,
+      "p_detect": 0.2426817296580479,
+      "mc_false_alarm": 0.00997,
+      "mc_detection": 0.24311,
+      "mc_trials": 100000
+    },
+    {
+      "strategy": "separable",
+      "rmse": 0.0795850067030814,
+      "threshold": 0.18514241114923946,
+      "p_false_alarm": 0.01,
+      "p_detect": 0.3293999268178907,
+      "mc_false_alarm": 0.00962,
+      "mc_detection": 0.3316,
+      "mc_trials": 100000
+    },
+    {
+      "strategy": "entangled",
+      "rmse": 0.06638933153530918,
+      "threshold": 0.15444468027615907,
+      "p_false_alarm": 0.01,
+      "p_detect": 0.47331126647876104,
+      "mc_false_alarm": 0.01033,
+      "mc_detection": 0.47512,
+      "mc_trials": 100000
+    }
+  ],
+  "site_min_km": 3.524544352245884,
+  "site_max_km": 16.64340260678422,
+  "source_cap_photons": 2.025000000000001,
+  "measured_dowran_gain_vs_optimal_classical": 1.2363636363636363,
+  "config_sha256": "a105fad2214d7a076a9060c2b4e4a7dbe407f22e67fa9d661e602bdd792a8a75"
+}

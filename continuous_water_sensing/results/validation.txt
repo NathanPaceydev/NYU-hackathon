@@ -1,0 +1,18 @@
+test_actual_classical_power_optimum (__main__.Physics.test_actual_classical_power_optimum) ... ok
+test_equal_loss_analytic (__main__.Physics.test_equal_loss_analytic) ... ok
+test_gaussian_uncertainty (__main__.Physics.test_gaussian_uncertainty) ... ok
+test_high_loss_erases_optical_gain (__main__.Physics.test_high_loss_erases_optical_gain) ... ok
+test_homodyne_covariance_from_full_state (__main__.Physics.test_homodyne_covariance_from_full_state) ... ok
+test_index_derivative_units (__main__.Physics.test_index_derivative_units) ... ok
+test_monte_carlo_heterogeneous_local_parameters (__main__.Physics.test_monte_carlo_heterogeneous_local_parameters) ... ok
+test_one_mode_equals_separable (__main__.Physics.test_one_mode_equals_separable) ... ok
+test_original_folder_unchanged (__main__.Physics.test_original_folder_unchanged) ... ok
+test_ou_averaging_limits (__main__.Physics.test_ou_averaging_limits) ... ok
+test_real_geometry_unique (__main__.Physics.test_real_geometry_unique) ... ok
+test_roc_monte_carlo (__main__.Physics.test_roc_monte_carlo) ... ok
+test_vacuum_and_zero_squeezing (__main__.Physics.test_vacuum_and_zero_squeezing) ... ok
+
+----------------------------------------------------------------------
+Ran 13 tests in 0.100s
+
+OK

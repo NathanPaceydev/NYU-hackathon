@@ -1,0 +1,99 @@
+[
+  {
+    "title": "Water-quality changes across sampling taps",
+    "subtitle": "Team 7 • Ideation • SDG 6: Clean Water and Sanitation",
+    "body": [
+      "UN 2025: poorest regions supplied 60,000 of ~2 million reporting measurements.",
+      "EPA: online monitoring supports investigation and treatment decisions.",
+      "Proposed user: a treatment/reuse operator tracking mean salt-proxy changes.",
+      "SDG 6 motivation. Water saved, health benefit and field performance are unmeasured."
+    ],
+    "notes": "UN SDG Report 2025, Goal 6: https://unstats.un.org/sdgs/report/2025/Goal-06/ reports approximately two million measurements used for reporting, 60,000 from poorest regions. These are monitoring data, not all worldwide measurements. WHO 2023 fact sheet, 2022 data: https://www.who.int/news-room/fact-sheets/detail/drinking-water . EPA online monitoring: https://www.epa.gov/waterresilience/online-water-quality-monitoring-resources . These sources establish importance and monitoring use cases, not a quantum bottleneck or salt-based pathogen detection. Operator need for this dose and sensitivity is an assumption.",
+    "chart": null
+  },
+  {
+    "title": "Proposed solution: correlated optical sensing",
+    "subtitle": "Squeezed light → water taps → homodyne readout → mean-change estimate",
+    "body": [
+      "Measure dissolved-salt changes through refractive index at 1550 nm.",
+      "Distribute one squeezed mode: correlated noise cancels partly in the mean.",
+      "Our addition: a water-proxy feasibility model with loss, drift and fair baselines.",
+      "Quantum sensing advantage is proposed; no quantum-computing speedup is claimed."
+    ],
+    "notes": "Technical rigor: 30%. Classical matrix operations and Gaussian threshold tests; no quantum computing speedup, QAOA, VQE or QML execution. Covariance is propagated through loss and phase jitter. Objective is minimum error for an unbiased arithmetic-mean estimate under the stated resource constraints; no changing site weights to discard noisy nodes. Theory https://arxiv.org/abs/1711.10459 and https://doi.org/10.1103/PhysRevResearch.2.023030 . Classical estimator is computationally tractable. QC-specific eligibility must be confirmed with organizers. Hack stack: Python, NumPy, SciPy, Matplotlib. No quantum hardware has been built.\nNaCl calibration: Saunders https://doi.org/10.1364/AO.55.000947 . Around500mg/kg, dn/dc=1.6207394e-7 RIU/(mg/kg). Effective length10µm is assumed, giving6.5699393e-6rad/(mg/kg). Local concentrations may differ. NaCl-equivalent mg/kg is a nonspecific proxy: no arsenic/nitrate selectivity or mg/L conversion. Classical simulator uses Python, NumPy and SciPy. Hardware remains proposed. Product concept: calibrated optical sampling module with operator software and confirmatory chemical analysis. Quantum-computing emphasis of rubric remains an eligibility question. 16 taps is a design assumption: four binary splitter stages and Ns=1.6 below the 2.025 photons/mode cap. Not optimal or deployment-derived. Guo et al. demonstrated four nodes: https://arxiv.org/abs/1905.09408 . Start with one/four measured taps. 100 m links, 10 nW/tap and 50 microkelvin residual are assumptions. Our contribution integrates existing CV theory with a NaCl proxy, losses, technical noise and decision analysis. No research-priority claim. docs/DESIGN_DECISIONS.md.",
+    "chart": null
+  },
+  {
+    "title": "How the simulation runs",
+    "subtitle": "Classical CPU computation of a proposed quantum optical sensor",
+    "body": [
+      "Python 3.12: NumPy, SciPy, pandas and Matplotlib. CPU simulation.",
+      "Inputs: configuration, 64-site geometry and synthetic salt-change signals.",
+      "Method: optical covariance, mean RMSE, drift and Gaussian detection tests.",
+      "Outputs: JSON/CSV, ten figures. Seed 2601006; 13 checks. Hardware remains proposed."
+    ],
+    "notes": "Implementation evidence: src/model.py, src/run.py, src/validate.py, src/practical_comparisons.py and requirements.txt. Local Python 3.12.14 CPU execution. NumPy 2.3.5 arrays, covariance, seeded Gaussian draws; SciPy 1.18.1 constants and normal CDF, root solve in comparison helper; pandas 2.2.3 CSV processing; Matplotlib 3.11.2 PNG/SVG figures. Python unittest runs 13 internal model checks. Inputs: config/default.json and data/site_geometry.csv. Chemical concentrations in the trace are synthetic; coordinates only from supplied USGS-labelled file. Compute phase slope, loss, covariance, w^T Sigma w, add thermal/calibration variance, then threshold tests. Most RMSE curves are analytic. Monte Carlo: 100,000 null and alternative draws per strategy. A separate synthetic OU time trace has response lag. Seed 2601006. Outputs: results/summary.json, CSV, feasibility.npz, ten figures. Run bash src/reproduce.sh in project root with prepared .venv. No quantum SDK, circuit execution, ML training or quantum hardware. JavaScript/Node artifact-tool creates PPTX; Python creates offline HTML; Playwright prints PDF. Authoring tools are separate from the scientific simulator. Details: docs/SIMULATION.md. 16 taps is a design assumption: four binary splitter stages and Ns=1.6 below the 2.025 photons/mode cap. Not optimal or deployment-derived. Guo et al. demonstrated four nodes: https://arxiv.org/abs/1905.09408 . Start with one/four measured taps. 100 m links, 10 nW/tap and 50 microkelvin residual are assumptions. Our contribution integrates existing CV theory with a NaCl proxy, losses, technical noise and decision analysis. No research-priority claim. docs/DESIGN_DECISIONS.md.",
+    "chart": null
+  },
+  {
+    "title": "Current result: 28% lower modeled error",
+    "subtitle": "Assumed 16 taps, 100 m links, 10 nW/tap, 1 s and 50 µK residual",
+    "body": [
+      "Total RMSE: 0.0921 → 0.0664 mg/kg; optical precision improves 1.67×",
+      "64-site gain is only 1.11×; at 10 mK drift, useful advantage disappears"
+    ],
+    "notes": "Quantum justification: 20%. This is a prediction for a proposed controlled instrument, not a measured water sensor. Optical RMSE .079619 vs .047583; total precision gain 1.387×. The ambitious common temperature residual is an engineering assumption. Probe photon accounting includes squeezed photons deducted from carrier power, but excludes pump and local oscillator energy.\nresults/summary.json pilot16. No measured-field accuracy claim. Common residual 50 microkelvin is an ambitious compensated bench target.\nResults/summary.json gives27.92% RMSE reduction versus coherent and16.58% versus independent squeezing. At64regional sites compare optimized coherent .0728867 to distributed .0655362mg/kg.10mK residual gives approximately9.137mg/kg for either strategy. More classical power also shrinks total gain. These are conditional predictions, not measured hardware results or experimental proof of the literature. Source plot uses exact model results rounded for spreadsheet portability. 16 taps is a design assumption: four binary splitter stages and Ns=1.6 below the 2.025 photons/mode cap. Not optimal or deployment-derived. Guo et al. demonstrated four nodes: https://arxiv.org/abs/1905.09408 . Start with one/four measured taps. 100 m links, 10 nW/tap and 50 microkelvin residual are assumptions. Our contribution integrates existing CV theory with a NaCl proxy, losses, technical noise and decision analysis. No research-priority claim. docs/DESIGN_DECISIONS.md.",
+    "chart": {
+      "xlabel": "Probe strategy",
+      "ylabel": "RMSE (mg/kg)",
+      "series": [
+        {
+          "name": "Optical error",
+          "x": [
+            0.0,
+            1.0,
+            2.0
+          ],
+          "y": [
+            0.07961902553916024,
+            0.06473296370204243,
+            0.04758283975789623
+          ],
+          "color": "#38bdf8"
+        },
+        {
+          "name": "Total error",
+          "x": [
+            0.0,
+            1.0,
+            2.0
+          ],
+          "y": [
+            0.09210106367510106,
+            0.0795850067030814,
+            0.06638933153530918
+          ],
+          "color": "#2dd4bf"
+        }
+      ],
+      "kind": "bar",
+      "categories": [
+        "Coherent",
+        "Independent squeezed",
+        "Distributed squeezed"
+      ]
+    }
+  },
+  {
+    "title": "Impact, sustainability and next steps",
+    "subtitle": "Three measurable KPIs • A laboratory pilot before deployment",
+    "body": [
+      "Alternative: ~28 nW/tap coherent matches the 10 nW/tap distributed error.",
+      "Monitoring: step detection 24% → 47% at 1% false alarm per decision; no liters saved yet.",
+      "Resources: 160 nJ probe/window for both; total energy and cost remain unmeasured.",
+      "Next: calibrate one cell, test four taps blindly, then measure energy and alarm rates."
+    ],
+    "notes": "Required closing three claims from judging guidance. All pilot claims use16nodes,10nW/node,1s,50µK common residual. Detection uses.15mg/kg increase and1% false alarm per decision. Optical energy160nJ is equal resources, not measured sustainability improvement. Algorithm is estimator accuracy, not quantum computational runtime. Next KPI: total joules per validated useful detection at matched coverage, false-alarm rate and response time. Results do not prove/disprove literature: conditional model consistency only.\nDetection of.15mg/kg mean increase,16nodes,1s,50µK residual.1% per-window false alarm at1Hz gives36expected flagged windows/hour; not an operational alarm policy. Need a separately validated sequential rule. First audience controlled plant lab; possible model research pilot then monitoring module, no confirmed partner or revenue. Compare conventional conductivity and higher-power coherent optics. Expansion only if useful detection beats these alternatives under an operator-relevant constraint and measured total cost/energy. Seek water operator and optical laboratory for a scoped pilot. Figures do not prove/disprove experimental literature; they show conditional consistency and failure regimes. Sources and technical details in docs/PROJECT_REPORT.md and results/summary.json. The proposed environmental impact remains unvalidated. Derived comparison: src/practical_comparisons.py and results/practical_comparisons.json.",
+    "chart": null
+  }
+]
