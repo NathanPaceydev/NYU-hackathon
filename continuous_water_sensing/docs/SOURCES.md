@@ -75,3 +75,31 @@ Every adjustable scalar is in `config/default.json`. Fundamental h and c use SI 
 The draft labels its file USGS/WQP, but it lacks sampling dates, units metadata, censoring flags, query URL, site depths and laboratory methods. The new project therefore describes it as supplied USGS-labelled geometry, not independently verified field monitoring data. Site coordinates do not prove available fiber routes, site access or simultaneous water conditions. The proposed regional optical network and every contamination time series are synthetic.
 
 For each configuration field, its reasoning and the measurement needed to validate it, see [DESIGN_DECISIONS.md](DESIGN_DECISIONS.md). For software provenance, inputs and generated outputs, see [SIMULATION.md](SIMULATION.md).
+
+## Parameters added for the judges' follow-up (`config/judges_response.json`)
+
+| Parameter | Value | Basis |
+|---|---|---|
+| Water absorption at 1550 nm | 1000 m⁻¹ (≈10 cm⁻¹) | Hale & Querry, Appl. Opt. 12, 555 (1973); approximate |
+| Water thermal conductivity | 0.6 W/m/K | Standard value at ~25 °C |
+| Beam radius in the cell | 5 µm | Assumption (single-mode fibre mode field) |
+| Laser relative power noise | 1e-3 rms | Assumption for a stabilised source over 1 s |
+| SBS-limited trunk power | 2 mW | Typical narrow-linewidth SBS threshold for km-scale fibre; assumption |
+| Class 1 eye-safe power, 1550 nm | ~10 mW | IEC 60825-1 order of magnitude; context only |
+| Conductivity slope | 2 µS/cm per mg/kg NaCl | Dilute NaCl, ~1 mS/cm at 500 mg/kg |
+| Conductivity temperature coefficient | 2 %/°C | Standard compensation for NaCl solutions |
+| Conductivity resolution | 0.1 µS/cm | YSI EXO conductivity sensor specification (range-dependent); treated as quantisation noise |
+| Temperature sensor accuracy | ±0.01 °C | YSI EXO specification; used as the 10 mK field residual |
+| Squeezer escape efficiency | 1.0, 0.95, 0.9 | Scenarios; not in the original model |
+
+The conductivity model is derived from specifications. It is not a measured baseline.
+
+## Advantage screen (`config/advantage_candidates.json`)
+| Parameter | Value | Source |
+|---|---|---|
+| Plasmonic shot-noise sensitivity | 8.6e-10 RIU/√Hz (coherent) | Dowran et al., Optica 5, 628 (2018), measured at 199 kHz |
+| Commercial SPR baseline noise | 3e-8 RIU | Biacore T200 spec <0.03 RU RMS (1 RU = 1e-6 RIU); drift ~0.3 RU/min on top |
+| Classical SPR LOD for microcystin-LR | 73 ± 8 ng/L | "An SPR biosensor for the detection of microcystins in drinking water" (EPA HERO 7429052, abstract); WHO guideline 1 µg/L |
+| Plasmonic chip η, generated squeezing | 0.69, 9 dB | Dowran et al. 2018: ~9 dB at source, ~4 dB after sensor |
+| Dose-limited Raman: η, generated squeezing | 0.44, 4.2 dB | η = 0.75 × 0.82 × 0.72 (Casacio SI); 4.2 dB reproduces their 1.3 dB detected squeezing (35 % power SNR) |
+| Thermal reference-arm rejection | 100× | assumption |

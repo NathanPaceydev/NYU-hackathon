@@ -1,0 +1,39 @@
+{
+  "squeezer_escape_efficiency": 0.95,
+  "universal_generated_db": [3, 6, 10, 15],
+  "salt_reference_rejection": 100,
+  "candidates": [
+    {
+      "name": "C. Plasmonic chip\n(microcystin)",
+      "eta": 0.69,
+      "generated_db": 9,
+      "shot_noise_riu_1s": 8.6e-10,
+      "technical_noise_riu_1s": 3e-8,
+      "classical_meets_target": true,
+      "need_note": "SPR already 73 ng/L\n(WHO limit 1 µg/L)",
+      "time_escape": true,
+      "time_note": "minutes-long binding:\naverage longer",
+      "cap_note": "plasmonic heating"
+    },
+    {
+      "name": "D. Live-cell Raman\n(dose-limited)",
+      "eta": 0.44,
+      "generated_db": 4.2,
+      "shot_noise_riu_1s": 1.0,
+      "technical_noise_riu_1s": 0.0,
+      "classical_meets_target": true,
+      "need_note": "fluorescence probes\nalready flag blooms",
+      "time_escape": false,
+      "time_note": "photodamage caps\ntotal dose",
+      "cap_note": "photodamage\n(demonstrated)"
+    }
+  ],
+  "sources": {
+    "C.shot_noise_riu_1s": "Dowran et al., Optica 5, 628 (2018): coherent-state sensitivity 8.6e-10 RIU/sqrt(Hz), twin beams 5.5e-10, measured at a 199 kHz modulation",
+    "C.technical_noise_riu_1s": "Biacore T200 spec: baseline noise <0.03 RU RMS (1 RU = 1e-6 RIU), so 3e-8 RIU is a best case; drift adds ~0.3 RU/min. Cross-instrument comparison with Dowran",
+    "C.eta": "Dowran et al. 2018: ~9 dB generated, ~4 dB after the sensor, so eta = (1-0.40)/(1-0.126) = 0.69; generated_db 9",
+    "C.need": "An SPR biosensor for the detection of microcystins in drinking water (EPA HERO 7429052): competitive assay, LOD 73 +/- 8 ng/L, 4 samples per 60 min; WHO guideline 1 ug/L",
+    "D.shot_noise_riu_1s": "normalised: shot-noise-limited at the photodamage limit (Casacio et al., Nature 594, 201, 2021)",
+    "D.eta_generated_db": "Casacio et al. 2021 SI: total efficiency 0.44 (microscope 0.75 x optics 0.82 x detector 0.72); 35 % power-SNR gain = 1.3 dB detected = 1.16x in RMSE; generated_db 4.2 reproduces it"
+  }
+}

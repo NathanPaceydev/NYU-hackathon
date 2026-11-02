@@ -1,0 +1,167 @@
+{
+  "loss_budget_db": {
+    "Splitter excess (4 stages)": 0.2,
+    "Fibre (100 m)": 0.018,
+    "Fibre-to-cell coupling": 0.4575749056067512,
+    "Sample cell": 0.4575749056067512,
+    "Homodyne detector": 0.22276394711152253
+  },
+  "total_loss_db": 1.355913758325025,
+  "eta": 0.7318273300691132,
+  "pilot_input_squeezing_db": 9.179891928228415,
+  "pilot_detected_squeezing_db": 4.47860086817694,
+  "pilot_total_gain": 1.387287106906884,
+  "max_total_gain": 1.4679956112528987,
+  "max_gain_input_db": 20.0,
+  "squeezing_needed": {
+    "pilot": {
+      "target_gain": 1.387287106906884,
+      "network_input_db": 9.179891928228407,
+      "generated_db": {
+        "1.0": 9.179891928228407,
+        "0.95": 11.277861168657914,
+        "0.9": 16.36505244763792
+      }
+    },
+    "1.2x": {
+      "target_gain": 1.2,
+      "network_input_db": 3.554439457352564,
+      "generated_db": {
+        "1.0": 3.554439457352564,
+        "0.95": 3.854143643132078,
+        "0.9": 4.213362245191813
+      }
+    },
+    "1.1x": {
+      "target_gain": 1.1,
+      "network_input_db": 1.6584350583386565,
+      "generated_db": {
+        "1.0": 1.6584350583386565,
+        "0.95": 1.7660498126807864,
+        "0.9": 1.888834993062022
+      }
+    }
+  },
+  "extra_loss_db_until_gain_1p1": 5.270913996084284,
+  "power": {
+    "quantum_rmse_10nw": 0.0663893315353092,
+    "coherent_power_matching_quantum_w": 2.7998462158242505e-08,
+    "floor_rmse": 0.0462970485266563,
+    "gain_at_1uw": 1.009362808925227,
+    "absorbed_fraction": 0.009950166250831893,
+    "heating_K_per_W": 263.93635723434124,
+    "heating_at_10nw_K": 2.6393635723434127e-06,
+    "photothermal_cap_w": 0.0001894396078051744,
+    "sbs_per_tap_w": 0.000125,
+    "eye_safe_per_tap_w": 0.000625,
+    "taps_where_sbs_forces_matched_power": 71432.49470975739
+  },
+  "temperature_sensitivity_mg_kg_per_K": {
+    "optical": 916.2484727649614,
+    "conductivity": 10.0
+  },
+  "head_to_head": [
+    {
+      "sensor": "Coherent 10 nW",
+      "scenario": "controlled (50 µK)",
+      "rmse_mg_kg": 0.09210106367510106,
+      "p_detect_1pct": 0.2426817296580479,
+      "p_detect_1_per_week": 0.001255010971010065
+    },
+    {
+      "sensor": "Coherent 10 nW",
+      "scenario": "field (10 mK)",
+      "rmse_mg_kg": 9.137453886636616,
+      "p_detect_1pct": 0.01044596170138625,
+      "p_detect_1_per_week": 1.790213964316711e-06
+    },
+    {
+      "sensor": "Coherent 28 nW",
+      "scenario": "controlled (50 µK)",
+      "rmse_mg_kg": 0.06638928533412894,
+      "p_detect_1pct": 0.47331189234978616,
+      "p_detect_1_per_week": 0.008392685725934117
+    },
+    {
+      "sensor": "Coherent 28 nW",
+      "scenario": "field (10 mK)",
+      "rmse_mg_kg": 9.137230896813742,
+      "p_detect_1pct": 0.010445972793023915,
+      "p_detect_1_per_week": 1.790217430977762e-06
+    },
+    {
+      "sensor": "Coherent 1 µW",
+      "scenario": "controlled (50 µK)",
+      "rmse_mg_kg": 0.046976681391490645,
+      "p_detect_1pct": 0.8069538400377619,
+      "p_detect_1_per_week": 0.07246124640961499
+    },
+    {
+      "sensor": "Coherent 1 µW",
+      "scenario": "field (10 mK)",
+      "rmse_mg_kg": 9.13711046956723,
+      "p_detect_1pct": 0.01044597878337146,
+      "p_detect_1_per_week": 1.790219303245865e-06
+    },
+    {
+      "sensor": "Quantum 10 nW",
+      "scenario": "controlled (50 µK)",
+      "rmse_mg_kg": 0.0663893315353092,
+      "p_detect_1pct": 0.4733112664787609,
+      "p_detect_1_per_week": 0.00839264977896272
+    },
+    {
+      "sensor": "Quantum 10 nW",
+      "scenario": "field (10 mK)",
+      "rmse_mg_kg": 9.137230897149431,
+      "p_detect_1pct": 0.010445972793007224,
+      "p_detect_1_per_week": 1.7902174309725445e-06
+    },
+    {
+      "sensor": "Conductivity ×1",
+      "scenario": "controlled (50 µK)",
+      "rmse_mg_kg": 0.033295374306534606,
+      "p_detect_1pct": 0.985326082858221,
+      "p_detect_1_per_week": 0.44210041938701633
+    },
+    {
+      "sensor": "Conductivity ×1",
+      "scenario": "field (10 mK)",
+      "rmse_mg_kg": 0.10513328916091455,
+      "p_detect_1pct": 0.184169878118005,
+      "p_detect_1_per_week": 0.000632031554933693
+    },
+    {
+      "sensor": "Conductivity ×16",
+      "scenario": "controlled (50 µK)",
+      "rmse_mg_kg": 0.008337832464870281,
+      "p_detect_1pct": 1.0,
+      "p_detect_1_per_week": 1.0
+    },
+    {
+      "sensor": "Conductivity ×16",
+      "scenario": "field (10 mK)",
+      "rmse_mg_kg": 0.10006970565457096,
+      "p_detect_1pct": 0.2040072497701909,
+      "p_detect_1_per_week": 0.0008112780240236244
+    }
+  ],
+  "conductivity_monte_carlo": {
+    "sigma": 0.033295374306534606,
+    "p_detect": 0.985326082858221,
+    "trials": 100000,
+    "mc_false_alarm": 0.00997,
+    "mc_detection": 0.98484
+  },
+  "operational_false_alarm_per_decision": 1.6534391534391535e-06,
+  "loss_limited_gain": {
+    "pilot": {
+      "optical_gain_at_max": 1.673271833801128,
+      "bound_at_max": 1.9310465456339094
+    },
+    "regional": {
+      "optical_gain_at_max": 1.2146147455543894,
+      "bound_at_max": 1.2605456769403012
+    }
+  }
+}

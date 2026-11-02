@@ -1,0 +1,71 @@
+{
+  "candidates": [
+    {
+      "candidate": "A. Salt pilot\n(field)",
+      "eta": 0.7318273300691132,
+      "tech_to_shot_ratio": 12830.596853434205,
+      "gate_need": true,
+      "gate_cap_binds": false,
+      "gate_low_loss": true,
+      "gate_no_time_escape": false,
+      "gain_vs_coherent_at_cap": 1.0000000019524375,
+      "gain_vs_best_classical": 0.010952012003250574,
+      "noise_cut_needed_for_1p2x": 12212.250846806006,
+      "need_note": "nothing reaches\n0.15 mg/kg in field",
+      "cap_note": "SBS 125 µW/tap",
+      "time_note": "slow drift:\naverage longer",
+      "all_gates": false
+    },
+    {
+      "candidate": "B. Salt + thermal\nreference arm",
+      "eta": 0.7318273300691132,
+      "tech_to_shot_ratio": 128.73743686659037,
+      "gate_need": true,
+      "gate_cap_binds": false,
+      "gate_low_loss": true,
+      "gate_no_time_escape": false,
+      "gain_vs_coherent_at_cap": 1.0000193931159678,
+      "gain_vs_best_classical": 1.0000193931159678,
+      "noise_cut_needed_for_1p2x": 122.53318301157977,
+      "need_note": "nothing reaches\n0.15 mg/kg in field",
+      "cap_note": "SBS 125 µW/tap",
+      "time_note": "slow drift:\naverage longer",
+      "all_gates": false
+    },
+    {
+      "candidate": "C. Plasmonic chip\n(microcystin)",
+      "eta": 0.69,
+      "tech_to_shot_ratio": 34.883720930232556,
+      "gate_need": false,
+      "gate_cap_binds": false,
+      "gate_low_loss": true,
+      "gate_no_time_escape": false,
+      "gain_vs_coherent_at_cap": 1.00023531978809,
+      "gain_vs_best_classical": 1.00023531978809,
+      "noise_cut_needed_for_1p2x": 37.28802867139778,
+      "need_note": "SPR already 73 ng/L\n(WHO limit 1 µg/L)",
+      "cap_note": "plasmonic heating",
+      "time_note": "minutes-long binding:\naverage longer",
+      "all_gates": false
+    },
+    {
+      "candidate": "D. Live-cell Raman\n(dose-limited)",
+      "eta": 0.44,
+      "tech_to_shot_ratio": 0.0,
+      "gate_need": false,
+      "gate_cap_binds": true,
+      "gate_low_loss": false,
+      "gate_no_time_escape": true,
+      "gain_vs_coherent_at_cap": 1.1617550926275553,
+      "gain_vs_best_classical": 1.1617550926275553,
+      "noise_cut_needed_for_1p2x": Infinity,
+      "need_note": "fluorescence probes\nalready flag blooms",
+      "cap_note": "photodamage\n(demonstrated)",
+      "time_note": "photodamage caps\ntotal dose",
+      "all_gates": false
+    }
+  ],
+  "salt_cap_w": 0.000125,
+  "squeezer_escape_efficiency": 0.95,
+  "any_candidate_passes_all_gates": false
+}
