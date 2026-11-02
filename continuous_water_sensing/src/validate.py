@@ -52,4 +52,23 @@ class Physics(unittest.TestCase):
  def test_real_geometry_unique(self):
   import pandas as pd
   p=pd.read_csv(ROOT/'data/site_geometry.csv');self.assertEqual(len(p),64);self.assertEqual(len(p.drop_duplicates(['lat','lon'])),64)
+class JudgesResponse(unittest.TestCase):
+ def setUp(self): self.r=json.loads((ROOT/'results/judges_response.json').read_text(encoding='utf-8'))
+ def test_loss_budget_matches_transmission(self):
+  self.assertAlmostEqual(sum(self.r['loss_budget_db'].values()),-10*np.log10(efficiency(16,P['pilot_fiber_length_km'],P)[0]),places=9)
+ def test_matched_power_reproduces_quantum(self):
+  eta=efficiency(16,P['pilot_fiber_length_km'],P)
+  coherent=np.sqrt(noise_budget(16,eta,dict(P,power_per_node_w=self.r['power']['coherent_power_matching_quantum_w']),'coherent')['total'])
+  self.assertAlmostEqual(coherent,self.r['power']['quantum_rmse_10nw'],places=6)
+ def test_conductivity_monte_carlo(self):
+  mc=self.r['conductivity_monte_carlo'];se=np.sqrt(mc['p_detect']*(1-mc['p_detect'])/mc['trials'])
+  self.assertLess(abs(mc['p_detect']-mc['mc_detection']),5*se)
+class AdvantagePath(unittest.TestCase):
+ def setUp(self): self.r=json.loads((ROOT/'results/advantage_path.json').read_text(encoding='utf-8'))['candidates']
+ def test_salt_reference_arm_beats_coherent_by_nothing(self):
+  self.assertAlmostEqual(self.r[1]['gain_vs_coherent_at_cap'],1.,places=3)
+ def test_gain_below_loss_ceiling(self):
+  for c in self.r: self.assertLessEqual(c['gain_vs_coherent_at_cap'],1/np.sqrt(1-c['eta'])+1e-12)
+ def test_salt_field_drift_dominates(self):
+  self.assertGreater(self.r[0]['tech_to_shot_ratio'],1e3)
 if __name__=='__main__': unittest.main(verbosity=2)

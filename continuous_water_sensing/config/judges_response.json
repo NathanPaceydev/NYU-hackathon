@@ -1,0 +1,14 @@
+{
+  "water_absorption_per_m_1550nm": 1000.0,
+  "water_thermal_conductivity_w_mk": 0.6,
+  "beam_radius_m": 5e-6,
+  "laser_relative_power_noise_rms": 1e-3,
+  "sbs_trunk_power_w": 2e-3,
+  "eye_safety_class1_w_1550nm": 1e-2,
+  "conductivity_ms_cm_per_mg_kg": 0.002,
+  "conductivity_temperature_coefficient_per_K": 0.02,
+  "conductivity_resolution_ms_cm": 0.0001,
+  "conductivity_temperature_accuracy_K": 0.01,
+  "squeezer_escape_efficiencies": [1.0, 0.95, 0.9],
+  "operational_false_alarm_per_week": 1
+}

@@ -1,0 +1,18 @@
+candidate,eta,tech_to_shot_ratio,gate_need,gate_cap_binds,gate_low_loss,gate_no_time_escape,gain_vs_coherent_at_cap,gain_vs_best_classical,noise_cut_needed_for_1p2x,need_note,cap_note,time_note,all_gates
+"A. Salt pilot
+(field)",0.7318273300691132,12830.596853434205,True,False,True,False,1.0000000019524375,0.010952012003250574,12212.250846806006,"nothing reaches
+0.15 mg/kg in field",SBS 125 µW/tap,"slow drift:
+average longer",False
+"B. Salt + thermal
+reference arm",0.7318273300691132,128.73743686659037,True,False,True,False,1.0000193931159678,1.0000193931159678,122.53318301157977,"nothing reaches
+0.15 mg/kg in field",SBS 125 µW/tap,"slow drift:
+average longer",False
+"C. Plasmonic chip
+(microcystin)",0.69,34.883720930232556,False,False,True,False,1.00023531978809,1.00023531978809,37.28802867139778,"SPR already 73 ng/L
+(WHO limit 1 µg/L)",plasmonic heating,"minutes-long binding:
+average longer",False
+"D. Live-cell Raman
+(dose-limited)",0.44,0.0,False,True,False,True,1.1617550926275553,1.1617550926275553,inf,"fluorescence probes
+already flag blooms","photodamage
+(demonstrated)","photodamage caps
+total dose",False
